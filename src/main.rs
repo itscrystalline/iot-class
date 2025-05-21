@@ -1,12 +1,43 @@
-use esp_idf_svc::{log as esp_log, sys};
+use esp_idf_svc::{
+    hal::{
+        adc::oneshot::{config::AdcChannelConfig, AdcChannelDriver, AdcDriver},
+        gpio::PinDriver,
+        prelude::*,
+    },
+    log as esp_log,
+    sys::{self, adc_atten_t_ADC_ATTEN_DB_12 as DB_12},
+};
 use log::info;
+use std::{thread, time::Duration};
 
-fn main() {
-    // It is necessary to call this function once. Otherwise some patches to the runtime
-    // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
+fn main() -> anyhow::Result<()> {
     sys::link_patches();
-    // Bind the log crate to the ESP Logging facilities
     esp_log::EspLogger::initialize_default();
 
-    info!("Hello, world!");
+    let peripherials = Peripherals::take()?;
+    let adc = AdcDriver::new(peripherials.adc1)?;
+
+    let config = AdcChannelConfig {
+        attenuation: DB_12,
+        ..Default::default()
+    };
+
+    let mut led = PinDriver::output(peripherials.pins.gpio26)?;
+    let mut analog_pin = AdcChannelDriver::new(&adc, peripherials.pins.gpio36, &config)?;
+
+    let mut counter = 0u8;
+    loop {
+        thread::sleep(Duration::from_millis(50));
+        let light: u16 = adc.read(&mut analog_pin)?;
+        if light < 1000 {
+            led.set_high()?;
+        } else {
+            led.set_low()?;
+        }
+        counter += 1;
+        if counter >= 20 {
+            counter = 0;
+            info!("Light: {light}");
+        }
+    }
 }
