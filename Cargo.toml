@@ -18,7 +18,10 @@ debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [features]
-default = []
+default = ["wk4"]
+wk3 = []
+wk4 = []
+
 
 experimental = ["esp-idf-svc/experimental"]
 
