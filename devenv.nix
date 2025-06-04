@@ -26,6 +26,7 @@
     # required for esp development
     espup # tool for installing esp-rs toolchain
     rustup # rust installer, required by espup
+    rust-analyzer
     espflash # flash binary to esp
     python3
   ];
@@ -48,6 +49,7 @@
     echo -e "\e[1mInstalling toolchains for esp"
     echo -e "-----------------------------\e[0m"
     espup install --export-file $DEVENV_ROOT/esp-export.sh
+    ln -sf ${pkgs.rust-analyzer}/bin/rust-analyzer ~/.rustup/toolchains/esp/bin/rust-analyzer
     source $DEVENV_ROOT/esp-export.sh
   '';
 

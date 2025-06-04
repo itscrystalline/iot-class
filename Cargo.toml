@@ -18,9 +18,10 @@ debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [features]
-default = ["wk4"]
+default = ["wk5"]
 wk3 = []
 wk4 = []
+wk5 = ["dep:bh1750", "dep:embedded-hal-bus"]
 
 
 experimental = ["esp-idf-svc/experimental"]
@@ -29,6 +30,9 @@ experimental = ["esp-idf-svc/experimental"]
 log = "0.4"
 esp-idf-svc = { version = "0.51", features = ["critical-section", "embassy-time-driver", "embassy-sync"] }
 anyhow = "1.0.98"
+bh1750 = { version = "0.1.0", optional = true }
+embedded-hal-bus = { version = "0.2.0", features = ["std"], optional = true }
+embedded-hal = "1.0.0"
 
 [build-dependencies]
 embuild = "0.33"
