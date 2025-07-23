@@ -1,6 +1,7 @@
 mod wk3;
 mod wk4;
 mod wk5;
+mod wk8;
 
 use esp_idf_svc::{log as esp_log, sys};
 use log::info;
@@ -16,6 +17,8 @@ fn main() -> anyhow::Result<()> {
     wk4::main()?;
     #[cfg(feature = "wk5")]
     wk5::main()?;
+    #[cfg(feature = "wk8")]
+    wk8::main()?;
 
     Ok(())
 }
