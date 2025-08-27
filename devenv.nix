@@ -10,6 +10,7 @@
     LD_LIBRARY_PATH = lib.makeLibraryPath [
       pkgs.stdenv.cc.cc
       pkgs.libxml2
+      pkgs.libz
     ];
     NIX_LD_LIBRARY_PATH = LD_LIBRARY_PATH;
     NIX_LD = pkgs.runCommand "ld.so" {} ''

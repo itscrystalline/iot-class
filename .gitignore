@@ -46,3 +46,5 @@ devenv.local.nix
 .pre-commit-config.yaml
 
 *.png
+
+src/secrets.rs
