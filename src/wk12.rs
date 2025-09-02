@@ -29,7 +29,7 @@ const SI7021_RESET: u8 = 0xFE;
 const SI7021_HUMID_NOHOLD: u8 = 0xF5;
 // const SI7021_TEMP_HOLD: u8 = 0xE3;
 const SI7021_TEMP_NOHOLD: u8 = 0xF3;
-const URL: &str = "http://172.16.0.167/post_data/index.php";
+const URL: &str = "http://172.16.0.127:8888/post_data/index.php";
 
 // #[allow(non_snake_case)]
 // #[derive(Serialize)]
@@ -79,12 +79,13 @@ pub fn main() -> anyhow::Result<()> {
         std::thread::sleep(core::time::Duration::from_secs(1));
         let humidity = read_humidity(&mut i2c_si7021)?;
         let temp = read_temp(&mut i2c_si7021)?;
+        info!("humidity: {humidity}, temp: {temp}");
         let json = json!({
             "sensorName": "Sensor1",
             "Temp": temp,
             "humid": humidity,
         });
-        send_to_server(&mut http, json)?;
+        _ = send_to_server(&mut http, json).inspect_err(|e| error!("error: {e}"));
     }
 }
 
