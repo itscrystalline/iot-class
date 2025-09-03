@@ -1,5 +1,7 @@
 #[cfg(feature = "wk12")]
 mod wk12;
+#[cfg(feature = "wk13")]
+mod wk13;
 #[cfg(feature = "wk3")]
 mod wk3;
 #[cfg(feature = "wk4")]
@@ -29,6 +31,8 @@ fn main() -> anyhow::Result<()> {
     wk8::main()?;
     #[cfg(feature = "wk12")]
     wk12::main()?;
+    #[cfg(feature = "wk13")]
+    wk13::main()?;
 
     Ok(())
 }

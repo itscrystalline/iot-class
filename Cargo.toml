@@ -18,12 +18,13 @@ debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [features]
-default = ["wk12"]
+default = ["wk13"]
 wk3 = []
 wk4 = []
 wk5 = ["dep:bh1750", "dep:embedded-hal-bus"]
 wk8 = ["dep:embedded-svc"]
-wk12 = ["dep:embedded-svc", "dep:bh1750", "dep:embedded-hal-bus"]
+wk12 = ["dep:embedded-svc", "dep:embedded-hal-bus"]
+wk13 = ["dep:embedded-svc", "dep:bh1750", "dep:embedded-hal-bus"]
 experimental = ["esp-idf-svc/experimental"]
 
 [dependencies]
